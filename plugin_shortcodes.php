@@ -11,17 +11,22 @@ if(!defined('ABSPATH')){
     exit;
 }
 
-function shortcode_fecha(){
-    return date('d-m-Y');
+function shortcode_hola_mundo(){
+    return "<p>Hola Mundo!</p>";
 }
-add_shortcode('fecha', 'shortcode_fecha');
+add_shortcode('hola_mundo', 'shortcode_hola_mundo');
 
-function shortcode_nombre_sitio(){
-    return get_bloginfo('name');
-}
-add_shortcode('nombre_sitio', 'shortcode_nombre_sitio');
+function shortcode_saludo($atts) {
+    // Se define el atributo 'nombre' con un valor por defecto 'invitado'
+    // Esto significa que, si el usuario no especifica el parámetro 'nombre',
+    // se utilizará el valor 'invitado'.
+    $atts = shortcode_atts( array(
+        'nombre' => 'invitado'
+    ), $atts, 'saludo');
 
-function shortcode_bienvenida(){
-    return "¡Bienvenido a nuestro sitirro web!";
+    // Se asume que el atributo 'nombre' viene incluido en $atts.
+    // Si no se envía, $atts['nombre'] no existirá y causará errores.
+    return '<h2>¡Hola, ' . esc_html($atts['nombre']) . '!</h2>';
 }
-add_shortcode('biewernvenida', 'shortcode_bienvenida');
+
+add_shortcode('saludo', 'shortcode_saludo');
